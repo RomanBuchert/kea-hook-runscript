@@ -159,7 +159,13 @@ void extract_lease6(std::vector<std::string>& env, const Lease6Ptr lease)
         env.push_back("KEA_LEASE6_DELEGATED_PREFIX=" + lease->addr_.toText() + "/" + std::to_string(lease->prefixlen_));
         env.push_back("KEA_LEASE6_DELEGATED_PREFIXLEN=" + std::to_string(lease->prefixlen_));
     }
-    env.push_back("KEA_LEASE6_HWADDR=" + lease->hwaddr_->toText(false));
+
+    if (lease->hwaddr_ != NULL) {
+        env.push_back("KEA_LEASE6_HWADDR=" + lease->hwaddr_->toText(false));
+    }
+    else {
+        env.push_back("KEA_LEASE6_HWADDR=");
+    }
     env.push_back("KEA_LEASE6_HOSTNAME=" + lease->hostname_);
     env.push_back("KEA_LEASE6_CLIENT_DUID=" + lease->duid_->toText());
     env.push_back("KEA_LEASE6_CLIENT_LAST_TRANSMISSION=" + std::to_string(lease->cltt_));
